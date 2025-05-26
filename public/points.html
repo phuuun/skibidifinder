@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skibidi Points</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <button class="nav-btn" onclick="window.location.href='index.html'"><span>🏠</span><br>Home</button>
+        <button class="nav-btn" onclick="window.location.href='nearby.html'"><span>📍</span><br>Nearby</button>
+        <button class="nav-btn active"><span>⭐</span><br>Points</button>
+        <button class="nav-btn" onclick="window.location.href='profile.html'"><span>👤</span><br>Profile</button>
+    </nav>
+    <!-- Header -->
+    <header class="main-header">
+        <h1>Skibidi Points</h1>
+    </header>
+    <main>
+        <div class="user-current-points">Current Points: <span id="userPoints">0</span></div>
+        <div class="locate-label">Your Points & Vouchers</div>
+        <div class="points-desc">Collect points by using and reviewing toilets. Redeem your points for vouchers below!</div>
+        <div class="points-container">
+            <div class="reward-card voucher-card">
+                <span class="reward-icon">🎟️</span>
+                <span class="reward-amount">20,000 IDR Voucher</span>
+                <span style="margin-left:auto;font-size:0.98rem;color:#888;">Requires: 2,000 Points</span>
+                <button class="redeem-btn">Redeem</button>
+            </div>
+            <div class="reward-card voucher-card">
+                <span class="reward-icon">🎟️</span>
+                <span class="reward-amount">50,000 IDR Voucher</span>
+                <span style="margin-left:auto;font-size:0.98rem;color:#888;">Requires: 5,000 Points</span>
+                <button class="redeem-btn">Redeem</button>
+            </div>
+            <div class="reward-card voucher-card">
+                <span class="reward-icon">🎟️</span>
+                <span class="reward-amount">100,000 IDR Voucher</span>
+                <span style="margin-left:auto;font-size:0.98rem;color:#888;">Requires: 10,000 Points</span>
+                <button class="redeem-btn">Redeem</button>
+            </div>
+            <div class="reward-card voucher-card top-reward">
+                <span class="reward-icon">🎟️</span>
+                <span class="reward-amount">150,000 IDR Voucher</span>
+                <span style="margin-left:auto;font-size:0.98rem;color:#888;">Requires: 15,000 Points</span>
+                <button class="redeem-btn">Redeem</button>
+            </div>
+        </div>
+        <section class="missions-section">
+            <h2 class="missions-title">Missions</h2>
+            <div id="missions-timer" style="text-align:center;font-size:1rem;color:#888;margin-bottom:1rem;"></div>
+            <div id="missions-list"></div>
+        </section>
+    </main>
+    <footer class="footer-bottom">
+        <p>Thank you for using Toilet Finder!</p>
+    </footer>
+    <script>
+    // Simulate fetching user points (replace with real logic as needed)
+    let userPoints = 0;
+    document.getElementById('userPoints').textContent = userPoints;
+
+    // Redeem button logic
+    const voucherRequirements = [2000, 5000, 10000, 15000];
+    document.querySelectorAll('.redeem-btn').forEach((btn, idx) => {
+        btn.addEventListener('click', function() {
+            if (userPoints >= voucherRequirements[idx]) {
+                userPoints -= voucherRequirements[idx];
+                document.getElementById('userPoints').textContent = userPoints;
+                alert('Voucher redeemed!');
+            } else {
+                alert('Not enough points to redeem this voucher.');
+            }
+        });
+    });
+
+    // Weekly Missions Logic
+    const allMissions = [
+        [
+            { desc: 'Rate 50 toilets', reward: 250, total: 50, progressId: 'mission1', userCount: 2 },
+            { desc: 'Rate in detail 10 toilets', reward: 500, total: 10, progressId: 'mission2', userCount: 0 }
+        ],
+        [
+            { desc: 'Visit 20 unique locations', reward: 300, total: 20, progressId: 'mission3', userCount: 0 },
+            { desc: 'Share 5 reviews', reward: 200, total: 5, progressId: 'mission4', userCount: 0 }
+        ],
+        [
+            { desc: 'Give 10 five-star ratings', reward: 400, total: 10, progressId: 'mission5', userCount: 0 },
+            { desc: 'Add 3 new toilets', reward: 600, total: 3, progressId: 'mission6', userCount: 0 }
+        ]
+    ];
+    // Pick mission set based on week number
+    function getWeekNumber(d) {
+        d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+        d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+        var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+        var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+        return weekNo;
+    }
+    const weekIdx = getWeekNumber(new Date()) % allMissions.length;
+    const missions = allMissions[weekIdx];
+
+    function renderMissions() {
+        const missionsList = document.getElementById('missions-list');
+        missionsList.innerHTML = '';
+        missions.forEach((m, i) => {
+            const percent = Math.min(100, (m.userCount / m.total) * 100);
+            missionsList.innerHTML += `
+            <div class="mission">
+                <div class="mission-desc">${m.desc} <span class="mission-reward">+${m.reward} pts</span></div>
+                <div class="mission-progress-bar">
+                    <div class="mission-progress" style="width: ${percent}%;"></div>
+                </div>
+                <div class="mission-progress-label"><span id="${m.progressId}-count">${m.userCount}</span>/${m.total}</div>
+            </div>`;
+        });
+    }
+    renderMissions();
+
+    // Timer for next mission reset (next Monday 00:00)
+    function getNextMonday() {
+        const now = new Date();
+        const day = now.getDay();
+        const diff = (8 - day) % 7 || 7; // days until next Monday
+        const nextMonday = new Date(now);
+        nextMonday.setDate(now.getDate() + diff);
+        nextMonday.setHours(0,0,0,0);
+        return nextMonday;
+    }
+    function updateMissionTimer() {
+        const timerDiv = document.getElementById('missions-timer');
+        const now = new Date();
+        const nextMonday = getNextMonday();
+        let diff = Math.max(0, nextMonday - now);
+        const days = Math.floor(diff / (1000*60*60*24));
+        diff -= days * (1000*60*60*24);
+        const hours = Math.floor(diff / (1000*60*60));
+        diff -= hours * (1000*60*60);
+        const minutes = Math.floor(diff / (1000*60));
+        diff -= minutes * (1000*60);
+        const seconds = Math.floor(diff / 1000);
+        timerDiv.textContent = `Next missions in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    setInterval(updateMissionTimer, 1000);
+    updateMissionTimer();
+    </script>
+</body>
+</html>

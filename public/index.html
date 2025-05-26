@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toilet Finder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <button class="nav-btn active"><span>🏠</span><br>Home</button>
+        <button class="nav-btn" onclick="window.location.href='nearby.html'"><span>📍</span><br>Nearby</button>
+        <button class="nav-btn" onclick="window.location.href='points.html'"><span>⭐</span><br>Points</button>
+        <button class="nav-btn" onclick="window.location.href='profile.html'"><span>👤</span><br>Profile</button>
+    </nav>
+
+    <!-- Header -->
+    <header class="main-header">
+        <h1>Toilet Finder</h1>
+    </header>
+
+    <main>
+        <!-- Locate Button -->
+        <section class="locate-section">
+            <div class="locate-label">Locate Nearest Toilet</div>
+            <button class="locate-btn logo-btn" id="locateBtn" title="Locate Nearest Toilet">
+                <img src="toiletLogo.png" alt="Locate Nearest Toilet" class="logo-btn-img">
+            </button>
+            <p id="location-status"></p>
+        </section>
+    </main>
+
+    <footer class="footer-bottom">
+        <p>Thank you for using Toilet Finder!</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+document.getElementById('locateBtn').addEventListener('click', function() {
+    window.location.href = 'nearby.html';
+});
+</script>
+</body>
+</html>

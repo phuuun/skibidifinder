@@ -1,0 +1,614 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Reset and base styles */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+header, .main-header, .top-nav, footer {
+    background-color: #fff;
+    color: #111;
+    text-align: center;
+    padding: 16px;
+}
+
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.3rem 0 0.1rem 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+.main-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 0 1rem 0;
+    background: #fff;
+    margin-top: 3.2rem;
+}
+.logo {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 0.5rem;
+}
+.main-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 1px;
+    color: #111;
+}
+
+main {
+    flex: 1 0 auto;
+    padding: 24px 12px 80px 12px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 0; /* Remove extra margin from main */
+}
+
+.card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(255,255,255,0.05);
+}
+
+h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+ul {
+    padding-left: 16px;
+}
+
+.points ul li,
+.toilet-info ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+}
+
+.voucher {
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    margin: 12px 0;
+    font-weight: bold;
+    background: #222;
+}
+
+.locate-label {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    text-align: center;
+    color: #222;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px #eef2ff;
+    width: 100%;
+    display: block;
+}
+.locate-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0 1rem 0;
+}
+.logo-btn {
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    width: 220px;
+    height: 220px;
+}
+.logo-btn:hover {
+    background: #fff;
+    transform: scale(1.07);
+}
+.logo-btn-img {
+    width: 144px;
+    height: 144px;
+    display: block;
+}
+
+.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-around;
+    padding: 0.3rem 0 0.1rem 0;
+    z-index: 100;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
+}
+.nav-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.1rem;
+    flex: 1;
+    padding: 0.3rem 0 0.1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.nav-btn.active, .nav-btn:focus {
+    color: #0078d4;
+    font-weight: 600;
+}
+
+.fab {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 5.5rem;
+    background: #0078d4;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.fab:hover {
+    background: #005fa3;
+}
+
+.bottom-left-btn {
+    position: fixed;
+    left: 1.5rem;
+    bottom: 4.5rem;
+    background: #111;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 2rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    cursor: pointer;
+    z-index: 201;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border 0.2s;
+    transform: none;
+}
+
+.footer-bottom {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #111;
+    color: #fff;
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.8rem 0 0.7rem 0;
+    z-index: 200;
+    letter-spacing: 0.5px;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.07);
+    border: none;
+    margin: 0;
+    height: auto;
+}
+
+footer {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.95rem;
+    margin: 0 0 4.5rem 0;
+    padding-top: 1.5rem;
+}
+
+.toilet-list {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    max-width: 400px;
+    margin: 2rem auto;
+}
+.toilet-item {
+    cursor: pointer;
+    margin-bottom: 1.2rem;
+    background: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    padding: 1.1rem 1.2rem 0.7rem 1.2rem;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+    position: relative;
+}
+.toilet-item:hover {
+    background: #111;
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+.toilet-item:hover > div:first-child,
+.toilet-item:hover strong,
+.toilet-item:hover span.stars,
+.toilet-item:hover .distance {
+    color: #fff !important;
+}
+.toilet-item:hover .toilet-detail {
+    background: #fff;
+    color: #222;
+}
+.toilet-item > div:first-child {
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 2rem;
+    min-width: 0;
+    word-break: break-word;
+    gap: 0.7rem;
+}
+.toilet-item .distance,
+.toilet-item .stars {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.toilet-item > div:first-child span:nth-child(2) {
+    flex: 2 1 0;
+    min-width: 0;
+    text-align: left;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    display: block;
+}
+.toilet-detail {
+    display: none;
+    text-align: left;
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.1rem 1rem 1rem 1rem;
+    margin-top: 0.7rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    border: 1px solid #e0e0e0;
+    color: #222;
+}
+.toilet-detail ul {
+    padding-left: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+.toilet-detail li {
+    margin-bottom: 0.3rem;
+    font-size: 0.98rem;
+}
+.toilet-detail a {
+    color: #0078d4;
+    text-decoration: underline;
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: 0.98rem;
+}
+.toilet-detail .review-btn,
+.toilet-detail .goto-btn {
+    background: #0078d4;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 2rem;
+    margin-right: 0.7rem;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 0.2rem;
+    transition: background 0.2s;
+    min-width: 170px;
+    white-space: normal;
+}
+.toilet-detail .goto-btn {
+    background: #222;
+    margin-right: 0;
+}
+.toilet-detail .review-btn:hover {
+    background: #005fa3;
+}
+.toilet-detail .goto-btn:hover {
+    background: #444;
+}
+.toilet-detail .rate-stars {
+    font-size: 1.5rem;
+    color: #FFD700;
+    letter-spacing: 0.1rem;
+}
+.toilet-detail .rate-label {
+    margin-left: 0.5rem;
+    color: #888;
+    font-size: 1rem;
+}
+.big-red-btn {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 1.5rem auto;
+    padding: 1rem 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background: #e53935;
+    border: none;
+    border-radius: 1.5rem;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.15);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.big-red-btn:hover, .big-red-btn:focus {
+    background: #b71c1c;
+}
+.sort-select {
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 1.5rem;
+    background: #e53935;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.10);
+    outline: none;
+    transition: background 0.2s;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+.sort-select:hover, .sort-select:focus {
+    background: #b71c1c;
+}
+.sort-section label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+}
+
+/* Minimalist Monochrome Points & Vouchers Section */
+.points-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin: 2.5rem auto 2.5rem auto;
+    max-width: 420px;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    border: none;
+    backdrop-filter: none;
+}
+.reward-card {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: none;
+    padding: 1rem 1.3rem;
+    font-size: 1.08rem;
+    font-weight: 500;
+    min-width: 180px;
+    border: 1px solid #d1d5db;
+    color: #222;
+    transition: none;
+    position: relative;
+    overflow: visible;
+    cursor: default;
+    animation: none;
+}
+.reward-card:hover {
+    background: #fafafa;
+    box-shadow: none;
+    transform: none;
+}
+.reward-icon {
+    font-size: 1.5rem;
+    filter: none;
+    color: #222;
+}
+.reward-amount {
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: #222;
+    letter-spacing: 0.1px;
+}
+.voucher-card {
+    border-left: 3px solid #bbb;
+    background: #fff;
+}
+.points-card {
+    border-left: 3px solid #bbb;
+    background: #fff;
+}
+.reward-card.top-reward::after {
+    display: none;
+}
+.points-desc {
+    text-align: center;
+    color: #888;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+    width: 100%;
+    display: block;
+}
+
+.redeem-btn {
+    margin-left: 1.2rem;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.redeem-btn:hover, .redeem-btn:focus {
+    background: #333;
+}
+
+.user-current-points {
+    text-align: center;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #222;
+    margin: 1.5rem 0 1.2rem 0;
+    letter-spacing: 0.5px;
+}
+.user-current-points #userPoints {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0078d4;
+    margin-left: 0.3rem;
+}
+
+.missions-section {
+    max-width: 420px;
+    margin: 2.5rem auto 2rem auto;
+    padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+.missions-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+.mission {
+    margin-bottom: 1.3rem;
+}
+.mission-desc {
+    font-size: 1rem;
+    color: #222;
+    margin-bottom: 0.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.mission-reward {
+    color: #0078d4;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-left: 0.7rem;
+}
+.mission-progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #e5e7eb;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+.mission-progress {
+    height: 100%;
+    background: #0078d4;
+    border-radius: 6px 0 0 6px;
+    transition: width 0.3s;
+}
+.mission-progress-label {
+    font-size: 0.98rem;
+    color: #888;
+    text-align: right;
+    margin-bottom: 0.2rem;
+}
+
+.edit-profile-btn {
+    margin-top: 1.2rem;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.4rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.edit-profile-btn:hover, .edit-profile-btn:focus {
+    background: #333;
+}
+.profile-details p {
+    margin: 0.4rem 0;
+    font-size: 1.13rem;
+    color: #222;
+}
+
+@media (max-width: 600px) {
+    .main-header h1 {
+        font-size: 1.3rem;
+    }
+    .logo {
+        width: 48px;
+        height: 48px;
+    }
+    .locate-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+    .fab {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+    }
+    .toilet-list {
+        max-width: 98vw;
+    }
+    .toilet-item {
+        padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+    }
+    .toilet-detail {
+        padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+    }
+    .toilet-item > div:first-child {
+        padding: 0.7rem 0.7rem;
+    }
+}

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Toilets</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <button class="nav-btn" onclick="window.location.href='index.html'"><span>🏠</span><br>Home</button>
+        <button class="nav-btn active"><span>📍</span><br>Nearby</button>
+        <button class="nav-btn" onclick="window.location.href='points.html'"><span>⭐</span><br>Points</button>
+        <button class="nav-btn" onclick="window.location.href='profile.html'"><span>👤</span><br>Profile</button>
+    </nav>
+    <!-- Header -->
+    <header class="main-header">
+        <h1>Nearby Toilets</h1>
+    </header>
+    <main>
+        <div class="locate-label" id="mainLabel">Toilets Near You</div>
+        <div class="sort-section" id="sortSection" style="text-align:center;margin-bottom:1.5rem;">
+            <label for="sortSelect" style="font-weight:500;margin-right:0.5rem;">Sort by:</label>
+            <select id="sortSelect" class="sort-select">
+                <option value="nearest">Nearest</option>
+                <option value="cleanest">Cleanest</option>
+                <option value="lessbusy">Less Busy</option>
+            </select>
+        </div>
+        <ul class="toilet-list" id="toiletList" style="list-style:none;padding:0;text-align:center;max-width:400px;margin:2rem auto;"></ul>
+        <div id="mapView" style="display:none;text-align:center;margin:2rem auto;">
+            <img src="map.png.jpg" alt="Map" style="width:100%;max-width:400px;display:block;margin:0 auto;">
+        </div>
+        <div id="destinationView" style="display:none;text-align:center;margin:2rem auto;">
+            <button id="backToListBtn" class="back-btn big-red-btn" style="margin:1rem 0 1.5rem 0;">← Back to Nearby</button>
+            <img src="destination.jpg" alt="Destination" style="width:100%;max-width:400px;display:block;margin:0 auto;">
+        </div>
+    </main>
+    <footer class="footer-bottom">
+        <p>Thank you for using Toilet Finder!</p>
+    </footer>
+    <button class="bottom-left-btn" title="Map">📍</button>
+    <script>
+const toilets = [
+    {
+        distance: 0.3,
+        name: 'Mall G.I. Samping H&M (Lt. 2)',
+        stars: 4,
+        busy: 2,
+        location: 'Mall Grand Indonesia',
+        toiletLoc: 'Di samping H&M lantai 2 tepat setelah naik elevator dari Lobby East',
+        reviews: [
+            { user: '**********', text: 'Toilet is awesome, but there is rarely an employee around to help', rating: 4 },
+            { user: 'Gerraldick1', text: 'Very clean and very chill atmosphere', rating: 5 },
+            { user: 'Kamoshida', text: 'I don’t have any problem with the toilet', rating: 3.5 }
+        ]
+    },
+    {
+        distance: 1.2,
+        name: 'Mall P.I. Samping LV (Lt. 2)',
+        stars: 4,
+        busy: 3,
+        location: 'Mall P.I.',
+        toiletLoc: 'Samping LV lantai 2',
+        reviews: [
+            { user: 'Joker', text: 'Clean and easy to find', rating: 4 },
+            { user: 'Fiko', text: 'A bit crowded but clean', rating: 4 }
+        ]
+    },
+    {
+        distance: 3.4,
+        name: 'Di Samping Kantor J&T',
+        stars: 3,
+        busy: 1,
+        location: 'Dekat Kantor J&T',
+        toiletLoc: 'Samping Kantor J&T',
+        reviews: [
+            { user: 'Pickachu', text: 'Average cleanliness', rating: 3 }
+        ]
+    },
+    {
+        distance: 5.4,
+        name: 'Di Dalam Post Office',
+        stars: 2,
+        busy: 4,
+        location: 'Post Office',
+        toiletLoc: 'Di dalam Post Office',
+        reviews: [
+            { user: 'Nathan Drake', text: 'Could be cleaner', rating: 2 }
+        ]
+    }
+];
+
+function renderToilets(list) {
+    const ul = document.getElementById('toiletList');
+    ul.innerHTML = '';
+    list.forEach((t, idx) => {
+        let stars = '★★★★★'.slice(0, t.stars) + '☆☆☆☆☆'.slice(0, 5-t.stars);
+        ul.innerHTML += `
+        <li class='toilet-item' data-idx='${idx}'>
+            <div><span class='distance'>${t.distance} km</span> <span>${t.name}</span> <span class='stars' style='color:#FFD700;'>${stars}</span></div>
+            <div class='toilet-detail'>
+                <div style='font-weight:600;margin-bottom:0.3rem;'>Lokasi: ${t.location}</div>
+                <div style='margin-bottom:0.3rem;'>Lokasi Toilet: ${t.toiletLoc}</div>
+                <div style='margin-bottom:0.5rem;'><b>Latest Review:</b></div>
+                <ul>
+                    ${t.reviews.map(r => `<li><b>${r.user}</b>: ${r.text} <span style='color:#FFD700;'>${'★'.repeat(Math.floor(r.rating))}${r.rating%1?'<span style="color:#FFD700;">½</span>':''}${'☆'.repeat(5-Math.ceil(r.rating))}</span> ${r.rating}/5</li>`).join('')}
+                </ul>
+                <a href='#' class='view-more'>view more...</a>
+                <div style='margin-bottom:0.7rem;'>
+                    <span class='rate-stars'>☆☆☆☆☆</span>
+                    <span class='rate-label'>Rate this</span>
+                </div>
+                <button class='review-btn' data-toilet='${t.name}'>Leave a more detailed review</button>
+                <button class='goto-btn'>Go to</button>
+            </div>
+        </li>`;
+    });
+    // Add click listeners for expand/collapse
+    document.querySelectorAll('.toilet-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Only expand/collapse if not clicking a button or link
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
+            const detail = this.querySelector('.toilet-detail');
+            detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+        });
+    });
+    addGotoListeners();
+}
+
+function sortToilets(type) {
+    let sorted = [...toilets];
+    if (type === 'nearest') sorted.sort((a,b) => a.distance - b.distance);
+    if (type === 'cleanest') sorted.sort((a,b) => b.stars - a.stars);
+    if (type === 'lessbusy') sorted.sort((a,b) => a.busy - b.busy);
+    renderToilets(sorted);
+}
+
+document.getElementById('sortSelect').addEventListener('change', function(e) {
+    sortToilets(e.target.value);
+});
+
+// Initial render
+sortToilets('nearest');
+
+// Map button functionality
+const mapBtn = document.querySelector('.bottom-left-btn');
+const toiletList = document.getElementById('toiletList');
+const sortSection = document.getElementById('sortSection');
+const mainLabel = document.getElementById('mainLabel');
+const mapView = document.getElementById('mapView');
+const destinationView = document.getElementById('destinationView');
+
+mapBtn.addEventListener('click', function() {
+    if (mapView.style.display === 'none') {
+        toiletList.style.display = 'none';
+        sortSection.style.display = 'none';
+        mainLabel.textContent = 'Map View';
+        mapView.style.display = 'block';
+        destinationView.style.display = 'none';
+    } else {
+        toiletList.style.display = '';
+        sortSection.style.display = '';
+        mainLabel.textContent = 'Toilets Near You';
+        mapView.style.display = 'none';
+        destinationView.style.display = 'none';
+    }
+});
+// Add destination view toggle for each Go to button
+function addGotoListeners() {
+    document.querySelectorAll('.goto-btn').forEach(btn => {
+        btn.addEventListener('click', function(ev) {
+            ev.stopPropagation();
+            toiletList.style.display = 'none';
+            sortSection.style.display = 'none';
+            mainLabel.textContent = 'Destination View';
+            mapView.style.display = 'none';
+            destinationView.style.display = 'block';
+        });
+    });
+    document.querySelectorAll('.review-btn').forEach(btn => {
+        btn.addEventListener('click', function(ev) {
+            ev.stopPropagation();
+            const toiletName = btn.getAttribute('data-toilet');
+            window.location.href = `review.html?toilet=${encodeURIComponent(toiletName)}`;
+        });
+    });
+    // Add back button listener
+    const backBtn = document.getElementById('backToListBtn');
+    if (backBtn) {
+        backBtn.onclick = function() {
+            destinationView.style.display = 'none';
+            toiletList.style.display = '';
+            sortSection.style.display = '';
+            mainLabel.textContent = 'Toilets Near You';
+        };
+    }
+}
+</script>
+</body>
+</html>

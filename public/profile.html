@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <button class="nav-btn" onclick="window.location.href='index.html'"><span>🏠</span><br>Home</button>
+        <button class="nav-btn" onclick="window.location.href='nearby.html'"><span>📍</span><br>Nearby</button>
+        <button class="nav-btn" onclick="window.location.href='points.html'"><span>⭐</span><br>Points</button>
+        <button class="nav-btn active"><span>👤</span><br>Profile</button>
+    </nav>
+    <!-- Header -->
+    <header class="main-header">
+        <h1>Your Profile</h1>
+    </header>
+    <main>
+        <div class="locate-label">Profile Information</div>
+        <div class="profile-card">
+            <div class="profile-avatar">
+                <span>👤</span>
+            </div>
+            <div class="profile-details">
+                <p><strong>Username:</strong> <span id="profile-username">User123</span></p>
+                <p><strong>Email:</strong> <span id="profile-email">user@email.com</span></p>
+                <p><strong>Member since:</strong> <span id="profile-member">2024</span></p>
+                <p><strong>Total Points:</strong> <span id="profile-points">0</span></p>
+                <p><strong>Vouchers Redeemed:</strong> <span id="profile-vouchers">0</span></p>
+            </div>
+            <button class="edit-profile-btn">Edit Profile</button>
+        </div>
+        <script>
+        // Simulate fetching user profile data (replace with real logic as needed)
+        document.getElementById('profile-username').textContent = 'User123';
+        document.getElementById('profile-email').textContent = 'user@email.com';
+        document.getElementById('profile-member').textContent = '2024';
+        document.getElementById('profile-points').textContent = '0';
+        document.getElementById('profile-vouchers').textContent = '0';
+        document.querySelector('.edit-profile-btn').onclick = function() {
+            alert('Profile editing coming soon!');
+        };
+        </script>
+    </main>
+    <footer class="footer-bottom">
+        <p>© 2025 SKIBIDI FINDER</p>
+    </footer>
+</body>
+</html>
