@@ -103,6 +103,9 @@ function renderToilets(list) {
             <div class='toilet-detail'>
                 <div style='font-weight:600;margin-bottom:0.3rem;'>Lokasi: ${t.location}</div>
                 <div style='margin-bottom:0.3rem;'>Lokasi Toilet: ${t.toiletLoc}</div>
+                <div style='margin-bottom:0.3rem;'>
+                    <img src="busy.png" alt="Busy Graph" style="width:220px;max-width:90vw;display:block;margin:0.5rem auto;">
+                </div>
                 <div style='margin-bottom:0.5rem;'><b>Latest Review:</b></div>
                 <ul>
                     ${t.reviews.map(r => `<li><b>${r.user}</b>: ${r.text} <span style='color:#FFD700;'>${'★'.repeat(Math.floor(r.rating))}${r.rating%1?'<span style="color:#FFD700;">½</span>':''}${'☆'.repeat(5-Math.ceil(r.rating))}</span> ${r.rating}/5</li>`).join('')}
